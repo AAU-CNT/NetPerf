@@ -1,0 +1,53 @@
+# OPTIONAL netlab track — a declarative dumbbell, closer to the Mininet feel.
+#
+# This is NOT required for any task. It is a convenience for students on native
+# Linux who prefer netlab's declarative style. netlab renders this to a
+# containerlab file and configures the nodes over Ansible.
+#
+# Prereqs (see this directory's README):
+#   pipx install networklab   # or: pip install networklab
+#   netlab install ansible containerlab
+#
+# Bring up / tear down:
+#   cd topology/netlab
+#   netlab up
+#   netlab down
+#
+# Shaping is still done by the repo's tc scripts afterwards — netlab only builds
+# the graph. Compile netlab's clab.yml output through the normal path:
+#   python topology/prepare_topology.py topology/netlab/clab.yml --out topology/.deploy.clab.yml
+#   sudo bash topology/bridges.sh up && sudo bash topology/impair.sh apply
+
+provider: clab
+defaults.device: linux
+
+# All hosts on one L2 segment via two bridges b1 == b2 (the assignment's "R"s).
+# Change the s*/d* lists to scale n; keep names <= 6 chars.
+nodes:
+  s1: {}
+  s2: {}
+  s3: {}
+  s4: {}
+  d1: {}
+  d2: {}
+  d3: {}
+  d4: {}
+  b1: { device: bridge }
+  b2: { device: bridge }
+
+links:
+  - { interfaces: [ s1, b1 ] }
+  - { interfaces: [ s2, b1 ] }
+  - { interfaces: [ s3, b1 ] }
+  - { interfaces: [ s4, b1 ] }
+  # the bottleneck. `vars` is carried into the clab.yml for prepare_topology.py.
+  - interfaces: [ b1, b2 ]
+    vars: { rate: 10mbit, delay: 5ms, loss: 0, limit: 1000 }
+  - { interfaces: [ d1, b2 ] }
+  - { interfaces: [ d2, b2 ] }
+  - { interfaces: [ d3, b2 ] }
+  - { interfaces: [ d4, b2 ] }
+
+addressing:
+  lan:
+    ipv4: 10.0.0.0/16

@@ -1,0 +1,5 @@
+# Plotting dependencies. `make bootstrap` already installs these into the repo
+# venv (../.venv), so normally you don't need a separate install — see README.md.
+matplotlib>=3.7
+pandas>=2.0
+numpy>=1.24

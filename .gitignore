@@ -1,0 +1,42 @@
+# Python venv + caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# generated deploy artefacts (prepare_topology.py writes these on `make deploy`)
+/topology/.deploy.clab.yml
+/topology/.deploy.shape.json
+
+# containerlab leaves a run dir next to the topology file
+clab-*/
+.clab/
+*.clab.yml.bak
+
+# experiment output
+/results/
+
+# plotting: optional isolated venv, stray figures
+/plotting/.venv/
+/plotting/*.png
+
+# student-remote publish clone (scripts/publish-student.sh)
+/.student-dist/
+
+# Task 1 cached corpus (re-downloaded on demand)
+/tasks/task1_compression/mobydick.txt
+
+# netlab (optional track) working files
+/topology/netlab/clab.yml
+/topology/netlab/clab_files/
+/topology/netlab/netlab.snapshot.yml
+/topology/netlab/ansible.cfg
+/topology/netlab/hosts.yml
+/topology/netlab/*.deploy.*
+
+# editor / OS
+*.swp
+.DS_Store
+
+# maintainer scratch notes
+/UPDATE.md

@@ -1,0 +1,40 @@
+{
+  "_comment": "containerlab node templates for the NetPerf25 labs. Merge into the VS Code extension setting 'containerlab.nodeTemplates', or re-enter by hand in the web editor's template editor (see README.md). Field names follow the containerlab-app TopoViewer template schema; adjust if your version differs.",
+  "templates": [
+    {
+      "name": "labhost",
+      "baseName": "h",
+      "kind": "linux",
+      "image": "netperf25/labhost:latest",
+      "interfacePattern": "eth{n}",
+      "icon": "server",
+      "iconColor": "#2d7dd2"
+    },
+    {
+      "name": "source (labhost)",
+      "baseName": "s",
+      "kind": "linux",
+      "image": "netperf25/labhost:latest",
+      "interfacePattern": "eth{n}",
+      "icon": "server",
+      "iconColor": "#33a02c"
+    },
+    {
+      "name": "destination (labhost)",
+      "baseName": "d",
+      "kind": "linux",
+      "image": "netperf25/labhost:latest",
+      "interfacePattern": "eth{n}",
+      "icon": "server",
+      "iconColor": "#e31a1c"
+    },
+    {
+      "name": "bridge",
+      "baseName": "b",
+      "kind": "bridge",
+      "interfacePattern": "{node}-{n}",
+      "icon": "bridge",
+      "iconColor": "#888888"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+# The reference dumbbell — a normal containerlab topology.
+#
+# This is the file `make deploy` reads by default. Edit it directly, or open it
+# in the containerlab web editor to build visually:
+#   https://srl-labs.github.io/containerlab-app/
+#
+#
+# To scale n: add s3/d3 nodes and their two links, and so on.
+
+name: dumbbell
+
+topology:
+  nodes:
+    s1: {kind: linux, image: netperf25/labhost:latest}
+    s2: {kind: linux, image: netperf25/labhost:latest}
+    b1: {kind: bridge}
+    b2: {kind: bridge}
+    d1: {kind: linux, image: netperf25/labhost:latest}
+    d2: {kind: linux, image: netperf25/labhost:latest}
+
+  links:
+    - endpoints: ["s1:eth1", "b1:b1-s1"]
+    - endpoints: ["s2:eth1", "b1:b1-s2"]
+
+    # the bottleneck: Task 3 conditions (10 Mb/s, 5 ms). Add `loss: 1` for Task 4.
+    - endpoints: ["b1:b1-b2", "b2:b2-b1"]
+      vars: {rate: 10mbit, delay: 5ms, loss: 0, limit: 1000}
+
+    - endpoints: ["d1:eth1", "b2:b2-d1"]
+    - endpoints: ["d2:eth1", "b2:b2-d2"]
